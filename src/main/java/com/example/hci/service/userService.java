@@ -30,6 +30,17 @@ public class userService {
         }
     }
 
+    public Result resetPwd(String user_id,String newPwd){
+        if(userRepo.existsById(user_id)){
+            User user = userRepo.findById(user_id).get();
+            user.setSalt(Encryption.generateSalt());
+            user.setPassword(Encryption.shiroEncryption(newPwd,user.getSalt()));
+            userRepo.save(user);
+            return ResultFactory.buildSuccessResult(null);
+        }
+        return ResultFactory.buildFailResult("修改密码失败");
+    }
+
     public Result getUserById(String user_id){
         if(userRepo.existsById(user_id)) {
             User user = userRepo.findById(user_id).get();

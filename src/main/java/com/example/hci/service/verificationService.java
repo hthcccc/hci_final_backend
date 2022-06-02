@@ -52,7 +52,9 @@ public class verificationService {
         if(!verificationRepo.findById(phone).get().getCode().equals(code)){
             return ResultFactory.buildFailResult("验证码错误");
         }
-        if(!verificationRepo.findById(phone).get().getTime().plusMillis(TimeUnit.SECONDS.toMillis(1800)).isBefore(Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8)))){
+        System.out.println(verificationRepo.findById(phone).get().getTime().plusMillis(TimeUnit.SECONDS.toMillis(1800)));
+        System.out.println(Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8)));
+        if(verificationRepo.findById(phone).get().getTime().plusMillis(TimeUnit.SECONDS.toMillis(1800)).isBefore(Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8)))){
             return ResultFactory.buildFailResult("验证码过期");
         }
 

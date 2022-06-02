@@ -49,6 +49,11 @@ public class SwaggerConfig /*implements WebMvcConfigurer*/ {
         return createBean(ApiGroupInfo.Ocr,"ocrApi", com.example.hci.config.ApiGroupInfo.VERSION);
     }
 
+    @Bean
+    public Docket newsAPI(){
+        return createBean(ApiGroupInfo.News,"newsApi", com.example.hci.config.ApiGroupInfo.VERSION);
+    }
+
 
     // 通过注解进行分组
     private Docket createBean(String groupName,String desc,String version){

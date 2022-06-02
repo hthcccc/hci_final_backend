@@ -42,10 +42,17 @@ public class userController {
 
     @PostMapping("/checkPwd")
     @ApiGroup(group = {"user"})
-    @ApiOperation(value = "校验密码，并返回token", notes = "手机号")
+    @ApiOperation(value = "校验密码，并返回token", notes = "用户id，密码")
     public Result checkPwd(@RequestParam("user_id") String user_id,
                             @RequestParam("pwd") String pwd){
         return uTmp.checkPwd(user_id,pwd);
     }
 
+    @PostMapping("/resetPwd")
+    @ApiGroup(group = {"user"})
+    @ApiOperation(value = "修改密码", notes = "用户id，新密码")
+    public Result resetPwd(@RequestParam("user_id") String user_id,
+                           @RequestParam("newPwd") String newPwd){
+        return uTmp.resetPwd(user_id,newPwd);
+    }
 }
