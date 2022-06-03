@@ -27,14 +27,14 @@ public class userController {
 
     @PostMapping("/sendMessage")
     @ApiGroup(group = {"user"})
-    @ApiOperation(value = "发送验证码", notes = "手机号")
+    @ApiOperation(value = "获取验证码", notes = "手机号")
     public Result sendCode(@RequestParam("phone") String phone){
         return vTmp.sendCode(phone);
     }
 
     @PostMapping("/checkCode")
     @ApiGroup(group = {"user"})
-    @ApiOperation(value = "校验验证码，如果手机号未绑定就注册新账号", notes = "手机号")
+    @ApiOperation(value = "校验验证码，如果手机号未绑定就注册新账号，并返回id", notes = "手机号")
     public Result checkCode(@RequestParam("phone") String phone,
                              @RequestParam("code") String code){
         return vTmp.checkCode(phone,code);

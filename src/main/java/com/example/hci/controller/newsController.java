@@ -15,6 +15,27 @@ public class newsController {
     @Autowired
     newsService tmp;
 
+    @GetMapping("/getTopX/{x}")
+    @ApiGroup(group = {"news"})
+    @ApiOperation(value = "获取今日点击量前x的新闻",notes="数量")
+    public Result getTopX(@PathVariable Integer x){
+        return tmp.getTopX(x);
+    }
+
+    @GetMapping("/searchNews/{keyword}")
+    @ApiGroup(group = {"news"})
+    @ApiOperation(value = "搜索新闻",notes="关键词")
+    public Result searchNews(@PathVariable String keyword){
+        return tmp.searchNews(keyword);
+    }
+
+    @GetMapping("/getNewsByPart/{part}")
+    @ApiGroup(group = {"news"})
+    @ApiOperation(value = "获得分区新闻",notes="分区")
+    public Result getNewsByPart(@PathVariable String part){
+        return tmp.getNewsByPart(part);
+    }
+
     @PostMapping("/publishNews")
     @ApiGroup(group = {"news"})
     @ApiOperation(value = "发布新闻",notes="新闻标题，分区，内容，url")

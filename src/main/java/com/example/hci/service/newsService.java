@@ -9,14 +9,16 @@ import com.example.hci.repository.newsRepository;
 import com.example.hci.repository.userRepository;
 import com.example.hci.result.Result;
 import com.example.hci.result.ResultFactory;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -27,6 +29,74 @@ public class newsService {
     userRepository userRepo;
     @Autowired
     historyRepository historyRepo;
+
+
+    public Result getTopX(Integer x){
+        TimeZone timeZone  = TimeZone.getDefault() ;
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(timeZone);
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String month = String.valueOf(1+calendar.get(Calendar.MONTH));
+        String day = String.valueOf(calendar.get(Calendar.DATE));
+        String today=year+"-"+month+"-"+day+" 00:00:00";
+        System.out.println(today);
+        List<News> newsList=newsRepo.getTopX(today,x);
+        List<Map<String,Object>> result = new ArrayList<>();
+        for(News news1 : newsList){
+            Map<String,Object> element = new HashMap<>();
+            element.put("news_id",news1.getId());
+            element.put("count",news1.getCount());
+            element.put("date",news1.getDate());
+            element.put("part",news1.getPart());
+            element.put("title",news1.getTitle());
+            element.put("url",news1.getUrl());
+            result.add(element);
+        }
+        return ResultFactory.buildSuccessResult(result);
+    }
+
+    public Result searchNews(String keyword){
+        News news = new News();
+        news.setTitle(keyword);
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        exampleMatcher=exampleMatcher.withMatcher("title", ExampleMatcher.GenericPropertyMatchers.contains());
+        Example<News> example=Example.of(news,exampleMatcher);
+        Sort sort = Sort.sort(News.class).descending();
+        sort.getOrderFor("date");
+        List<News> newsList=newsRepo.findAll(example,sort);
+        List<Map<String,Object>> result = new ArrayList<>();
+        for(News news1 : newsList){
+            Map<String,Object> element = new HashMap<>();
+            element.put("news_id",news1.getId());
+            element.put("count",news1.getCount());
+            element.put("date",news1.getDate());
+            element.put("title",news1.getTitle());
+            element.put("url",news1.getUrl());
+            result.add(element);
+        }
+        return ResultFactory.buildSuccessResult(result);
+    }
+
+    public Result getNewsByPart(String part){
+        News news = new News();
+        news.setPart(part);
+        Example<News> example=Example.of(news);
+        Sort sort = Sort.sort(News.class).descending();
+        sort.getOrderFor("date");
+        List<News> newsList=newsRepo.findAll(example,sort);
+        List<Map<String,Object>> result = new ArrayList<>();
+        for(News news1 : newsList){
+            Map<String,Object> element = new HashMap<>();
+            element.put("news_id",news1.getId());
+            element.put("count",news1.getCount());
+            element.put("date",news1.getDate());
+            element.put("title",news1.getTitle());
+            element.put("url",news1.getUrl());
+            result.add(element);
+        }
+        return ResultFactory.buildSuccessResult(result);
+    }
 
     public Result readNews(String user_id,String id){
         User user = null;
