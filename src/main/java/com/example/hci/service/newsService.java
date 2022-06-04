@@ -30,6 +30,41 @@ public class newsService {
     @Autowired
     historyRepository historyRepo;
 
+    public Result getOnesInterest(String user_id){
+        if(user_id.isEmpty()||!userRepo.existsById(user_id)){
+            Sort sort = Sort.sort(News.class).descending();
+            sort.getOrderFor("date");
+            List<News> newsList=newsRepo.findAll(sort);
+            List<Map<String,Object>> result = new ArrayList<>();
+            for(News news1 : newsList){
+                Map<String,Object> element = new HashMap<>();
+                element.put("news_id",news1.getId());
+                element.put("count",news1.getCount());
+                element.put("date",news1.getDate());
+                element.put("part",news1.getPart());
+                element.put("title",news1.getTitle());
+                element.put("url",news1.getUrl());
+                result.add(element);
+            }
+            return ResultFactory.buildSuccessResult(result);
+
+        }else{
+            List<News> newsList=newsRepo.getOnesInterestNews(user_id);
+            List<Map<String,Object>> result = new ArrayList<>();
+            for(News news1 : newsList){
+                Map<String,Object> element = new HashMap<>();
+                element.put("news_id",news1.getId());
+                element.put("count",news1.getCount());
+                element.put("date",news1.getDate());
+                element.put("part",news1.getPart());
+                element.put("title",news1.getTitle());
+                element.put("url",news1.getUrl());
+                result.add(element);
+            }
+            return ResultFactory.buildSuccessResult(result);
+        }
+
+    }
 
     public Result getTopX(Integer x){
         TimeZone timeZone  = TimeZone.getDefault() ;
