@@ -19,7 +19,8 @@ import java.io.IOException;
 public class Test4JTest {
 
     public Result imageToText(MultipartFile file1){
-        String path = "C://Users//Derek//Desktop//HCI";		//我的项目存放路径
+        String path = "C://Users//Derek//Desktop//HCI_final";		//我的项目存放路径(hth电脑)
+        //String path = "C://Users//Administrator//Desktop//HCI_final";//远程服务器上
 
         String result = null;
 
