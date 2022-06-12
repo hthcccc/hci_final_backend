@@ -146,7 +146,7 @@ public class newsService {
             news.setCount(news.getCount() + 1);
             newsRepo.save(news);
             Map<String,Object> result= new HashMap<>();
-            result.put("content",news.getContent());
+            result.put("content",Arrays.asList(news.getContent().split("\n\n")));
             result.put("title",news.getTitle());
             result.put("date",news.getDate().toString());
             result.put("url",news.getUrl());
