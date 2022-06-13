@@ -15,6 +15,13 @@ public class newsController {
     @Autowired
     newsService tmp;
 
+    @GetMapping("/getOnesFavoritePart/{user_id}")
+    @ApiGroup(group = {"news"})
+    @ApiOperation(value = "获取某用户最感兴趣的分区",notes="用户id")
+    public Result getOnesFavoritePart(@PathVariable String user_id){
+        return tmp.getOnesFavoritePart(user_id);
+    }
+
     @GetMapping("/getOnesInterst/{user_id}")
     @ApiGroup(group = {"news"})
     @ApiOperation(value = "获取某用户感兴趣分区的新闻",notes="用户id")

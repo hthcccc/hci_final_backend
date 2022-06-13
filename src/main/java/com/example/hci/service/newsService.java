@@ -198,6 +198,18 @@ public class newsService {
         newsRepo.save(news);
     }
 
+    public Result getOnesFavoritePart(String user_id){
+        if(userRepo.existsById(user_id)){
+            String part=newsRepo.getOnesFavoritePart(user_id);
+            if(part==null||part.equals("")){
+                return ResultFactory.buildSuccessResult("国际");
+            }else{
+                return ResultFactory.buildSuccessResult(part);
+            }
+        }
+        return ResultFactory.buildFailResult("获取失败");
+    }
+
     public static String image2Base64(String imgUrl) {
         URL url = null;
         InputStream is = null;
