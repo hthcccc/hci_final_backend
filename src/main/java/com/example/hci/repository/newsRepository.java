@@ -18,4 +18,10 @@ public interface newsRepository extends JpaRepository<News,String> {
 
     @Query(value = "select F.part from (select T.part,count(T.part) from (select user_id,part from history join news on history.news_id = news.id where history.user_id=?1) T(user_id,part) group by T.part) F(part,count) order by F.count desc limit 1", nativeQuery = true)
     String getOnesFavoritePart(String user_id);
+
+    @Query(value = "select n from News n where n.part=?1 order by n.date desc")
+    List<News> getNewsByPart(String part);
+
+    @Query(value = "select * from News where title like?1 order by date desc",nativeQuery = true)
+    List<News> getNewsByKeyword(String keyword);
 }

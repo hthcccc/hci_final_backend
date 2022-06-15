@@ -104,14 +104,7 @@ public class newsService {
     }
 
     public Result searchNews(String keyword){
-        News news = new News();
-        news.setTitle(keyword);
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
-        exampleMatcher=exampleMatcher.withMatcher("title", ExampleMatcher.GenericPropertyMatchers.contains());
-        Example<News> example=Example.of(news,exampleMatcher);
-        Sort sort = Sort.sort(News.class).descending();
-        sort.getOrderFor("date");
-        List<News> newsList=newsRepo.findAll(example,sort);
+        List<News> newsList=newsRepo.getNewsByKeyword("%"+keyword+"%");
         List<Map<String,Object>> result = new ArrayList<>();
         for(News news1 : newsList){
             Map<String,Object> element = new HashMap<>();
@@ -127,12 +120,7 @@ public class newsService {
     }
 
     public Result getNewsByPart(String part){
-        News news = new News();
-        news.setPart(part);
-        Example<News> example=Example.of(news);
-        Sort sort = Sort.sort(News.class).descending();
-        sort.getOrderFor("date");
-        List<News> newsList=newsRepo.findAll(example,sort);
+        List<News> newsList=newsRepo.getNewsByPart(part);
         List<Map<String,Object>> result = new ArrayList<>();
         for(News news1 : newsList){
             Map<String,Object> element = new HashMap<>();
