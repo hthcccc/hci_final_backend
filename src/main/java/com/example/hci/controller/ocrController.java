@@ -22,17 +22,17 @@ public class ocrController {
         return tmp.imageToText(file);
     }
 
-//    @PostMapping("/imageToTextByBase64")
-//    @ApiGroup(group = {"ocr"})
-//    @ApiOperation(value = "图片翻译文字",notes="图片")
-//    public Result imageToTextByBase64(@RequestParam("Base64") String str){
-//        return tmp.imageToText(str);
-//    }
-
-    @GetMapping("/imageToTextByBase64/{str}")
+    @PostMapping("/imageToTextByBase64")
     @ApiGroup(group = {"ocr"})
     @ApiOperation(value = "图片翻译文字",notes="图片")
-    public Result imageToTextByBase64(@PathVariable String str){
+    public Result imageToTextByBase64(@RequestBody String str){
         return tmp.imageToText(str);
     }
+
+//    @GetMapping("/imageToTextByBase64/{str}")
+//    @ApiGroup(group = {"ocr"})
+//    @ApiOperation(value = "图片翻译文字",notes="图片")
+//    public Result imageToTextByBase64(@PathVariable String str){
+//        return tmp.imageToText(str);
+//    }
 }
