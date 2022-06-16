@@ -35,6 +35,17 @@ public class User {
     @Column(name = "sex")
     private String sex;
 
+    @Column(name = "signature", length = 100)
+    private String signature;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
     public String getSex() {
         return sex;
     }
