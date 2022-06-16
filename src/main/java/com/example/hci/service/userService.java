@@ -30,6 +30,16 @@ public class userService {
         }
     }
 
+    public Result addUser(String name,String pwd){
+        User user=new User();
+        user.setId(generateID(24));
+        user.setName(name);
+        user.setSalt(Encryption.generateSalt());
+        user.setPassword(Encryption.shiroEncryption(pwd,user.getSalt()));
+        userRepo.save(user);
+        return ResultFactory.buildSuccessResult(user.getId());
+    }
+
     public Result resetPwd(String user_id,String newPwd){
         if(userRepo.existsById(user_id)){
             User user = userRepo.findById(user_id).get();

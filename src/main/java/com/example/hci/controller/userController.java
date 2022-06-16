@@ -55,4 +55,12 @@ public class userController {
                            @RequestParam("newPwd") String newPwd){
         return uTmp.resetPwd(user_id,newPwd);
     }
+
+    @PostMapping("/addUser")
+    @ApiGroup(group = {"user"})
+    @ApiOperation(value = "注册", notes = "用户名，密码")
+    public Result addUser(@RequestParam("name") String name,
+                           @RequestParam("pwd") String pwd){
+        return uTmp.addUser(name,pwd);
+    }
 }
