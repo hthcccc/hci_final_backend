@@ -22,7 +22,10 @@ import java.io.OutputStream;
 public class Test4JTest {
 
     public Result imageToText(String imgStr){
-        String path = "C://Users//Derek//Desktop//HCI_final";
+        System.out.println(System.getProperty( "user.dir" ));
+        String path = System.getProperty( "user.dir" );
+        //path.replaceAll("\\","//");
+        //String path = "C://Users//Derek//Desktop//HCI_final";
         String imgFilePath;
         if (imgStr == null) //图像数据为空
             return ResultFactory.buildFailResult("图片为空");
