@@ -81,8 +81,8 @@ public class Test4JTest {
         }
         finally {
             // 操作完上面的文件 需要删除在根目录下生成的临时文件
-            //File f = new File(newfile.toURI());
-            //f.delete();
+            File f = new File(newfile.toURI());
+            f.delete();
         }
         System.out.println("result: ");
         System.out.println(result);
