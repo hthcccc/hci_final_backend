@@ -21,4 +21,11 @@ public class ocrController {
     public Result imageToText(@RequestParam("file") MultipartFile file){
         return tmp.imageToText(file);
     }
+
+    @PostMapping("/imageToTextByBase64")
+    @ApiGroup(group = {"ocr"})
+    @ApiOperation(value = "图片翻译文字",notes="图片")
+    public Result imageToTextByBase64(@RequestParam("Base64") String str){
+        return tmp.imageToText(str);
+    }
 }
