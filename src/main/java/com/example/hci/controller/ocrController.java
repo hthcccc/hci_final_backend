@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 @CrossOrigin(origins="*")
 @RestController("ocr")
 @RequestMapping("/ocr")
@@ -22,6 +24,13 @@ public class ocrController {
         return tmp.imageToText(file);
     }
 
+    @PostMapping("/imageToTextByFile")
+    @ApiGroup(group = {"ocr"})
+    @ApiOperation(value = "图片翻译文字",notes="图片")
+    public Result imageToTextByFile(@RequestParam("file") File file){
+        return tmp.imageToText(file);
+    }
+
     @PostMapping("/imageToTextByBase64")
     @ApiGroup(group = {"ocr"})
     @ApiOperation(value = "图片翻译文字",notes="图片")
@@ -29,10 +38,10 @@ public class ocrController {
         return tmp.imageToText(str);
     }
 
-//    @GetMapping("/imageToTextByBase64/{str}")
+//    @GetMapping("/imageToTextByBase64v1/{str}")
 //    @ApiGroup(group = {"ocr"})
 //    @ApiOperation(value = "图片翻译文字",notes="图片")
-//    public Result imageToTextByBase64(@PathVariable String str){
+//    public Result imageToTextByBase64_v1(@PathVariable String str){
 //        return tmp.imageToText(str);
 //    }
 }

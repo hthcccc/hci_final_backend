@@ -84,8 +84,8 @@ public class Test4JTest {
         }
         finally {
             // 操作完上面的文件 需要删除在根目录下生成的临时文件
-            File f = new File(newfile.toURI());
-            f.delete();
+            //File f = new File(newfile.toURI());
+            //f.delete();
         }
         System.out.println("result: ");
         System.out.println(result);
@@ -131,6 +131,66 @@ public class Test4JTest {
             File f = new File(newfile.toURI());
             f.delete();
         }
+
+        /**
+         *  获取项目根路径，例如： D:\IDEAWorkSpace\tess4J
+         */
+//        File directory = new File(path);
+//        String courseFile = null;
+//        try {
+//            courseFile = directory.getCanonicalPath();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //设置训练库的位置
+//        instance.setDatapath(courseFile + "//tessdata");
+//
+//        instance.setLanguage("chi_sim");//chi_sim ：简体中文， eng	根据需求选择语言库
+//        String result = null;
+//        try {
+//            long startTime = System.currentTimeMillis();
+//            result =  instance.doOCR(newfile);
+//            long endTime = System.currentTimeMillis();
+//            System.out.println("Time is：" + (endTime - startTime) + " 毫秒");
+//        } catch (TesseractException e) {
+//            e.printStackTrace();
+//        }
+
+        System.out.println("result: ");
+        System.out.println(result);
+        return ResultFactory.buildSuccessResult(result);
+    }
+
+    public Result imageToText(File file1){
+        //String path = "C://Users//Derek//Desktop//HCI_final";		//我的项目存放路径(hth电脑)
+        String path = System.getProperty( "user.dir" );
+        //String path = "C://Users//Administrator//Desktop//HCI_final";//远程服务器上
+
+        String result = null;
+
+        ITesseract instance = new Tesseract();
+
+
+        try {
+            //获取训练库的位置
+            File directory = new File(path);
+            String courseFile = null;
+            courseFile = directory.getCanonicalPath();
+
+            //设置训练库的位置和语言
+            instance.setDatapath(courseFile + "//tessdata");
+            instance.setLanguage("chi_sim");//chi_sim ：简体中文， eng	根据需求选择语言库
+
+            //image转化为text
+            long startTime = System.currentTimeMillis();
+            result =  instance.doOCR(file1);
+            long endTime = System.currentTimeMillis();
+            System.out.println("Time is：" + (endTime - startTime) + " 毫秒");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         /**
          *  获取项目根路径，例如： D:\IDEAWorkSpace\tess4J
